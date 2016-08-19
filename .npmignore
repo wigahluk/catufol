@@ -1,0 +1,9 @@
+# Idea
+.idea
+*.iml
+
+# Build
+*.tgz
+
+# Tests
+*.spec.js
