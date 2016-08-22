@@ -16,14 +16,13 @@ function Configuration (json) {
     this.json = function () {
         return {
             appName: json.appName,
-            buildPath: json.buildPath || './build',
+            buildPath: this.buildPath(),
             vendors: json.vendors.slice(),
             entryFile: json.entryFile || './app/main.ts'
         };
     };
-    this.wpPort = function () {
-        return json.devServerPort || 8080;
-    }
+    this.buildPath = function () { return json.buildPath || './build'; };
+    this.wpPort = function () { return json.devServerPort || 8080; }
 }
 
 Configuration.prototype.wpBase = function () {
@@ -73,7 +72,9 @@ Configuration.prototype.wpBuild = function () {
     const base = this.wpRunBase();
     base.devtool = wp.devtool.sourceMap;
     base.entry.app.push(conf.entryFile);
-    base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: 'index.html'}));
+    base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'}));
+    base.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
+    base.plugins.push(new webpack.optimize.UglifyJsPlugin());
     base.plugins.push(new webpack.optimize.CommonsChunkPlugin('vendor', `${conf.appName}/bundles/vendor.bundle.js`));
     return base;
 };
@@ -86,7 +87,7 @@ Configuration.prototype.wpRun = function () {
     base.entry.app.push('webpack/hot/dev-server');
     base.entry.app.push('webpack-dev-server/client?http://localhost:8080');
     base.entry.app.push(conf.entryFile);
-    base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: 'index.html'}));
+    base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'}));
     base.plugins.push(new webpack.optimize.CommonsChunkPlugin('vendor', `${conf.appName}/bundles/vendor.bundle.js`));
     return base;
 };

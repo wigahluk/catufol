@@ -7,3 +7,9 @@
 
 # Tests
 *.spec.js
+
+# Node
+node_modules
+
+# Jasmine
+./spec

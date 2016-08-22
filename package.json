@@ -2,7 +2,6 @@
   "name": "catufol",
   "version": "0.1.0",
   "description": "Helper tool for Webpack based SPAs using TypeScript",
-  "main": "index.js",
   "scripts": {
     "test:jasmine": "jasmine",
     "test": "npm run test:jasmine"
@@ -30,6 +29,7 @@
   "peerDependencies": {
     "es6-shim": ">=0.35.1",
     "reflect-metadata": ">=0.1.8",
+    "tslint": ">=3.14.0",
     "typescript": ">=1.8.10",
     "webpack": ">=1.13.1",
     "webpack-dev-server": ">=1.14.1",
@@ -52,7 +52,6 @@
     "phantomjs-prebuilt": "^2.1.12",
     "raw-loader": "^0.5.1",
     "ts-loader": "^0.8.2",
-    "tslint": "^3.14.0",
     "tslint-loader": "^2.1.5"
   }
 }
