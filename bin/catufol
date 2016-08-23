@@ -91,7 +91,7 @@ if ( cli.has(args, '-i') || cli.has(args, '--interactive')) {
 // Build
 if ( cli.has(args, '-b') || cli.has(args, '--build')) {
     cli.log('Starting Webpack package build.' );
-    clean(path.resolve(process.cwd(), conf.buildPath));
+    clean(path.resolve(process.cwd(), conf.buildPath()));
     packager.build(conf);
 }
 // Run Build
