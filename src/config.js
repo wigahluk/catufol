@@ -18,7 +18,8 @@ function Configuration (json) {
             appName: json.appName,
             buildPath: this.buildPath(),
             vendors: json.vendors.slice(),
-            entryFile: json.entryFile || './app/main.ts'
+            devEntryFile: json.devEntryFile || './app/main.ts',
+            prodEntryFile: json.prodEntryFile || './app/main.ts'
         };
     };
     this.buildPath = function () { return json.buildPath || './build'; };
@@ -71,7 +72,7 @@ Configuration.prototype.wpBuild = function () {
     const conf = this.json();
     const base = this.wpRunBase();
     base.devtool = wp.devtool.sourceMap;
-    base.entry.app.push(conf.entryFile);
+    base.entry.app.push(conf.prodEntryFile);
     base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'}));
     base.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
     base.plugins.push(new webpack.optimize.UglifyJsPlugin());
@@ -86,7 +87,8 @@ Configuration.prototype.wpRun = function () {
     base.debug = true;
     base.entry.app.push('webpack/hot/dev-server');
     base.entry.app.push('webpack-dev-server/client?http://localhost:8080');
-    base.entry.app.push(conf.entryFile);
+    base.entry.app.push(conf.devEntryFile);
+    base.plugins.push(new webpack.HotModuleReplacementPlugin());
     base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'}));
     base.plugins.push(new webpack.optimize.CommonsChunkPlugin('vendor', `${conf.appName}/bundles/vendor.bundle.js`));
     return base;
