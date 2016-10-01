@@ -1,7 +1,8 @@
 {
   "name": "catufol",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Helper tool for Webpack based SPAs using TypeScript",
+  "main": "./src/catufol.js",
   "scripts": {
     "test:jasmine": "jasmine",
     "test": "npm run test:jasmine"
@@ -24,7 +25,6 @@
     "catufol": "./bin/catufol"
   },
   "devDependencies": {
-    "jasmine": "^2.4.1"
   },
   "peerDependencies": {
     "es6-shim": ">=0.35.1",
@@ -37,12 +37,12 @@
     "zone.js": "0.6.12"
   },
   "dependencies": {
-    "css-loader": "^0.23.1",
-    "file-loader": "^0.9.0",
-    "html-loader": "0.4.3",
+    "css-loader": "0.23.1",
+    "file-loader": "0.9.0",
+    "html-loader": "0.4.4",
     "html-webpack-plugin": "2.22.0",
     "istanbul-instrumenter-loader": "0.2.0",
-    "jasmine-core": "2.4.1",
+    "jasmine": "2.5.2",
     "json-loader": "0.5.4",
     "karma": "1.2.0",
     "karma-chrome-launcher": "1.0.1",
@@ -55,7 +55,7 @@
     "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "2.1.12",
     "raw-loader": "0.5.1",
-    "style-loader": "^0.13.1",
+    "style-loader": "0.13.1",
     "ts-loader": "0.8.2",
     "tslint-loader": "2.1.5",
     "url-loader": "^0.5.7"

@@ -1,9 +1,15 @@
-Catufol
+Catùfol
 =======
 
 A helper tool on the top of Webpack, Karma, TypeScript and other tools that helps to reduce configuration
 steps. The tool will try to work with a minimum of configuration and will use conventions and other project files
-to extract configuration settings.
+to extract configuration settings whenever it's possible.
+
+### About the name
+
+Catùfol is a Catalan word that is used to name to pots or containers that ares used to carry water in a water wheel or
+_noria_. There is also a Romainan word (without the accent) that means _potato_. You can chose whichever
+meaning you like more :)
 
 ## Conventions
 
