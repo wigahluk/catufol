@@ -19,7 +19,8 @@ function Configuration (json) {
             buildPath: this.buildPath(),
             vendors: json.vendors.slice(),
             devEntryFile: json.devEntryFile || './app/main.ts',
-            prodEntryFile: json.prodEntryFile || './app/main.ts'
+            prodEntryFile: json.prodEntryFile || './app/main.ts',
+            useShimJQuery: !!json.useShimJQuery
         };
     };
     this.buildPath = function () { return json.buildPath || './build'; };
@@ -27,8 +28,16 @@ function Configuration (json) {
 }
 
 Configuration.prototype.wpBase = function () {
+    const plugins = [];
+    if (this.json().useShimJQuery) {
+        plugins.push(new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery"
+        }));
+    }
     return {
-        plugins: [],
+        plugins: plugins,
         htmlLoader: wp.htmlLoader,
         tslint: wp.tslint,
         resolve: { extensions: wp.extensions },

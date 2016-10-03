@@ -45,6 +45,7 @@ You may want to add a configuration file `catufol.json`:
 
     {
       "appName": "apps", // It will default to your project name in package.json if not provided
+      "useShimJQuery": true, // defaults to false, when true makes jQuery available globally in your app as `jQuery`, `$`, and `window.jQuery`
       "vendors": [
         "reflect-metadata",
         "es6-shim",
@@ -85,3 +86,9 @@ you are using AngularJS 2.0 it may look like this:
 * `-i` `--interactive` will run tests in interactive mode using Chrome
 * `-r` `--run` will run Webpack Development Server
 * `-b` `--build` will create the final artifacts using Webpack
+
+### Testing
+
+To run the tests, first install webpack locally (do not save or include in package.json) with `npm i webpack`.
+
+Run `npm test`.
