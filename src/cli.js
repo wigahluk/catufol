@@ -1,4 +1,5 @@
 'use strict';
+const logger = require('morral').logger('Catùfol');
 
 function has (args, value) {
     const v = args.filter(s => s.toLowerCase() === value.toLowerCase());
@@ -17,12 +18,8 @@ function getValue (args, value) {
     return m;
 }
 
-function log (msg) {
-    console.log(`[Catufol] ${new Date().toISOString()} ${msg}\n`);
-}
-
 module.exports = {
     has: has,
     get: getValue,
-    log: log
+    log: logger.log
 };

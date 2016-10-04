@@ -48,7 +48,7 @@ function build (conf) {
             process.exit(1);
         }
         cli.log('Build completed.');
-        cli.log(stats);
+        cli.log('Hash: ' + stats.hash);
     })
 }
 

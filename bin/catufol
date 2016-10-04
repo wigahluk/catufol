@@ -94,4 +94,3 @@ if ( cli.has(args, '-b') || cli.has(args, '--build')) {
     clean(path.resolve(process.cwd(), conf.buildPath()));
     packager.build(conf);
 }
-// Run Build

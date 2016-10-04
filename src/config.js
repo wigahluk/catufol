@@ -20,7 +20,8 @@ function Configuration (json) {
             vendors: json.vendors.slice(),
             devEntryFile: json.devEntryFile || './app/main.ts',
             prodEntryFile: json.prodEntryFile || './app/main.ts',
-            exportJQuery: !!json.exportJQuery
+            exportJQuery: !!json.exportJQuery,
+            karmaFiles: json.karmaFiles || []
         };
     };
     this.buildPath = function () { return json.buildPath || './build'; };
@@ -58,7 +59,7 @@ Configuration.prototype.wpRunBase = function () {
     };
     base.output = {
         path: path.resolve(pwd, conf.buildPath),
-        filename: `${conf.appName}/bundles/bundle.js`,
+        filename: `${conf.appName}/bundles/bundle.[hash].js`,
         sourceMapFilename: '[file].map',
         publicPath: '/'
     };
@@ -85,7 +86,7 @@ Configuration.prototype.wpBuild = function () {
     base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'}));
     base.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
     base.plugins.push(new webpack.optimize.UglifyJsPlugin());
-    base.plugins.push(new webpack.optimize.CommonsChunkPlugin('vendor', `${conf.appName}/bundles/vendor.bundle.js`));
+    base.plugins.push(new webpack.optimize.CommonsChunkPlugin('vendor', `${conf.appName}/bundles/vendor.bundle.[hash].js`));
     return base;
 };
 
@@ -129,19 +130,21 @@ Configuration.prototype.wpDebug = function () {
 };
 
 Configuration.prototype.karmaBase = function () {
+    const json = this.json();
+    const files = [
+        'node_modules/zone.js/dist/zone.min.js',
+        'node_modules/zone.js/dist/async-test.js',
+        karma.phPolyfill,
+        'node_modules/reflect-metadata/Reflect.js',
+        karma.es6Shim,
+        { pattern: 'test.loader.js', watched: false }
+    ].concat(json.karmaFiles);
     return {
         basePath: '',
         logLevel: 'info',
         port: 9876,
         frameworks: ['jasmine'],
-        files: [
-            'node_modules/zone.js/dist/zone.min.js',
-            'node_modules/zone.js/dist/async-test.js',
-            karma.phPolyfill,
-            'node_modules/reflect-metadata/Reflect.js',
-            karma.es6Shim,
-            { pattern: 'test.loader.js', watched: false }
-        ],
+        files: files,
         preprocessors: { 'test.loader.js': ['webpack', 'sourcemap'] }
     };
 };

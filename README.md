@@ -52,7 +52,8 @@ You may want to add a configuration file `catufol.json`:
         ...
       ],
       "devEntryFile": "./app/main.ts", // It will default to ./app/main.ts if not provided
-      "prodEntryFile": "./app/main-build.ts" // It will default to ./app/main.ts if not provided
+      "prodEntryFile": "./app/main-build.ts" // It will default to ./app/main.ts if not provided,
+      "karmaFiles": [...] // This can be used to insert files in the files configuration for Karma. if you need any.By default catufol will load some needed files.
     }
 
 It may be helpful to add some scripts to your `package.json` file:
