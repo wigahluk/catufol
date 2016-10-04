@@ -20,7 +20,7 @@ function Configuration (json) {
             vendors: json.vendors.slice(),
             devEntryFile: json.devEntryFile || './app/main.ts',
             prodEntryFile: json.prodEntryFile || './app/main.ts',
-            useShimJQuery: !!json.useShimJQuery
+            exportJQuery: !!json.exportJQuery
         };
     };
     this.buildPath = function () { return json.buildPath || './build'; };
@@ -29,7 +29,7 @@ function Configuration (json) {
 
 Configuration.prototype.wpBase = function () {
     const plugins = [];
-    if (this.json().useShimJQuery) {
+    if (this.json().exportJQuery) {
         plugins.push(new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
@@ -109,6 +109,7 @@ Configuration.prototype.wpTestBase = function () {
     base.module.loaders.push(wp.loaders.html);
     base.module.loaders.push(wp.loaders.raw);
     base.module.loaders.push(wp.loaders.json);
+    base.module.loaders.push(wp.loaders.styleNullLoader);
     return base;
 };
 

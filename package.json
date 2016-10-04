@@ -1,6 +1,6 @@
 {
   "name": "catufol",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Helper tool for Webpack based SPAs using TypeScript",
   "main": "./src/catufol.js",
   "scripts": {
@@ -24,8 +24,7 @@
   "bin": {
     "catufol": "./bin/catufol"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "es6-shim": ">=0.35.1",
     "less": "2.7.1",
@@ -52,6 +51,7 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.8.0",
     "less-loader": "2.2.3",
+    "null-loader": "0.1.1",
     "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "2.1.12",
     "raw-loader": "0.5.1",

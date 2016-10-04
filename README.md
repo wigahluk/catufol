@@ -45,7 +45,7 @@ You may want to add a configuration file `catufol.json`:
 
     {
       "appName": "apps", // It will default to your project name in package.json if not provided
-      "useShimJQuery": true, // defaults to false, when true makes jQuery available globally in your app as `jQuery`, `$`, and `window.jQuery`
+      "exportJQuery": true, // defaults to false, when true makes jQuery available in your modules as `jQuery`, `$`, and `window.jQuery`
       "vendors": [
         "reflect-metadata",
         "es6-shim",

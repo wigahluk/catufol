@@ -96,6 +96,10 @@ const loaders = {
             /app\/domain\/services\/testing/,
             /node_modules/
         ]
+    },
+    styleNullLoader: {
+        test: /\.(?:css|less|scss|styl)$/,
+        loader: 'null-loader'
     }
 };
 
