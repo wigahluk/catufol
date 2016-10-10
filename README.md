@@ -67,7 +67,7 @@ npm install catufol
     
 You may want to add a configuration file `catufol.json`:
 
-```json
+```
 {
   "appName": "apps",     // It will default to your project name in package.json if not provided
   "exportJQuery": true,  // Defaults to false, when true makes jQuery available in your modules as `jQuery`, `$`, and `window.jQuery`
@@ -84,7 +84,7 @@ You may want to add a configuration file `catufol.json`:
 ```
 
 It may be helpful to add some scripts to your `package.json` file:
-```json
+```
 {
   "scripts": {
      "build": "catufol -b",
