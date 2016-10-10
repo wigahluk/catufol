@@ -7,19 +7,42 @@ to extract configuration settings whenever it's possible.
 
 ### About the name
 
-Catùfol is a Catalan word that is used to name to pots or containers that ares used to carry water in a water wheel or
+Catùfol is a Catalan word that is used to name the pots or containers that ares used to carry water in a water wheel or
 _noria_. There is also a Romainan word (without the accent) that means _potato_. You can chose whichever
 meaning you like more :)
 
 ## Conventions
 
+Catùfol relays on folder structure and file name conventions in order to work properly. The main idea is to minimize
+configuration settings, as a trade off, we need to follow some conventions on how we structure our app.
+
 ### Folders
+
+```
+yourApp/
+├── app/                     // Here goes all your app code
+│   ├── main.ts              // Your entry point file for Webpack
+│   ├── helloTest.spec.ts    // Test files are expected to have the extension .spec.ts
+│   └── index.html           // This is the HTML template used to generate the final index.html on your build
+├── coverage/                // Generated folder. Coverage reports will be created here
+├── build/                   // Generated folder. Your packaged files will be created here
+├── typings/                 // Generated folder. Typings use this folder for type definitions
+├── node_modules/            // Generated folder. NPM use this folder for keeping dependencies
+├── catufol.json             // Catufol configuration file
+├── package.json             // NPM configuration file
+├── typings.json             // Typings configuration file
+├── test.loader.json         // Karma entry point
+└── tsconfig.json            // Configuration for the Typescript compiler
+```
 
 * `app` contains all the source files, including tests
 * `build` will be used for generated files and its content will be deleted on every build. It should not be versioned
 * `coverage` will contain the test coverage reports and it should also be ignored from version control
 
-### Files
+_As a general rule, avoid creating your own content in generated folders or files as they can be overwritten by different
+tools._
+
+#### Files
 
 * `app/main.ts` entry point for the application
 * `app/index.html` template to be used to generate the index.html file for loading the app
@@ -38,48 +61,74 @@ be compatible with JavaScript sources too
 ## Usage
 
 Install it with NPM:
-
-    npm install catufol
+```shell
+npm install catufol
+```
     
 You may want to add a configuration file `catufol.json`:
 
-    {
-      "appName": "apps", // It will default to your project name in package.json if not provided
-      "exportJQuery": true, // defaults to false, when true makes jQuery available in your modules as `jQuery`, `$`, and `window.jQuery`
-      "vendors": [
-        "reflect-metadata",
-        "es6-shim",
-        ...
-      ],
-      "devEntryFile": "./app/main.ts", // It will default to ./app/main.ts if not provided
-      "prodEntryFile": "./app/main-build.ts" // It will default to ./app/main.ts if not provided,
-      "karmaFiles": [...] // This can be used to insert files in the files configuration for Karma. if you need any.By default catufol will load some needed files.
-    }
+```json
+{
+  "appName": "apps",     // It will default to your project name in package.json if not provided
+  "exportJQuery": true,  // Defaults to false, when true makes jQuery available in your modules as `jQuery`, `$`, and `window.jQuery`
+  "vendors": [           // Modules included here will be included in a vendors.bundle.js file instead of bundle.js
+     "reflect-metadata",
+     "es6-shim"
+     /* ... */
+  ],
+  "devEntryFile": "./app/main.ts",        // It will default to ./app/main.ts if not provided
+  "prodEntryFile": "./app/main-build.ts", // It will default to ./app/main.ts if not provided,
+  "karmaFiles": [/* ... */]               // This can be used to insert files in the files configuration for Karma.
+                                          // If you need any.By default catufol will load some needed files.
+}
+```
 
 It may be helpful to add some scripts to your `package.json` file:
+```json
+{
+  "scripts": {
+     "build": "catufol -b",
+        "start": "catufol -r",
+        "test:debug": "catufol -i",
+        "test": "catufol -t"
+        /* ... */
+        }
+}
 
-    "scripts": {
-      "build": "catufol -b",
-      "start": "catufol -r",
-      "test:debug": "catufol -i",
-      "test": "catufol -t",
-      ...
-      },
+```
 
 Test loader file for __Karma__ is expected to be on the root of your project and to be named `test.loader.js` and if
 you are using AngularJS 2.0 it may look like this:
 
-    Error.stackTraceLimit = 20;
-    
-    var context = require.context('./app', true, /\.spec\.ts$/);
-    context.keys().forEach(context);
-    var testing = require('@angular/core/testing');
-    var browserDynamic = require('@angular/platform-browser-dynamic/testing');
-    
-    testing.setBaseTestProviders(
-        browserDynamic.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-        browserDynamic.TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
-    );
+```javascript
+Error.stackTraceLimit = 20;
+
+var context = require.context('./app', true, /\.spec\.ts$/);
+context.keys().forEach(context);
+var testing = require('@angular/core/testing');
+var browserDynamic = require('@angular/platform-browser-dynamic/testing');
+
+testing.setBaseTestProviders(
+    browserDynamic.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
+    browserDynamic.TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
+);
+```
+
+### Build Folder
+
+The generated `build` folder will have the following structure:
+
+```
+build/
+├── yourApp/                            // The folder will be named with the same name you used in catufol.json
+│   └── bundles/
+│       ├── bundle.[sha].js             // Bundled file for your app
+│       ├── bundle.[sha].js.map         // Source map for your main bundle file
+│       ├── vendor.bundle.[sha].js      // Vendors code bundle
+│       └── vendor.bundle.[sha].js.map  // Sourcmap for vendors code
+├── buildinfo.json                      // A file containing details about the build
+└── index.html                          // HTML that will work as your entry point
+```
 
 ### CLI options
 

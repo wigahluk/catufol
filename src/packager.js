@@ -3,6 +3,10 @@
  * Creates a webpack development server
  */
 const cli = require('./cli');
+const git = require('./rxgit');
+const fs = require('./rxfs');
+const path = require('path');
+const pwd = process.cwd();
 
 var webpack = require('webpack');
 var webpackDevServer = require('webpack-dev-server');
@@ -47,8 +51,27 @@ function build (conf) {
             cli.log(err);
             process.exit(1);
         }
-        cli.log('Build completed.');
-        cli.log('Hash: ' + stats.hash);
+        const jConf = conf.json();
+        const infoPath = path.resolve(pwd, conf.buildPath());
+        const today = new Date();
+        git.sha()
+            .map(sha => {
+                return {
+                    appName: jConf.appName,
+                    buildTimeStamp: today.valueOf(),
+                    buildDate: today.toISOString(),
+                    webpackHash: stats.hash,
+                    gitSha: sha
+                };
+            }).flatMap(info => fs.writeFile(infoPath + '/buildinfo.json', JSON.stringify(info), 'utf8'))
+            .subscribe(
+                undefined,
+                error => {
+                    cli.log('Unable to write buildInfo.json file due to Error ', error);
+                    process.exit(1);
+                },
+                () => { cli.log('Build completed.'); }
+            );
     })
 }
 
