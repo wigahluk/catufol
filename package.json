@@ -1,6 +1,6 @@
 {
   "name": "catufol",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Helper tool for Webpack based SPAs using TypeScript",
   "main": "./src/catufol.js",
   "scripts": {
@@ -54,11 +54,11 @@
     "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "2.1.13",
     "raw-loader": "0.5.1",
-    "rxjs": "^5.0.0-beta.12",
+    "rxjs": "5.0.0-beta.12",
     "style-loader": "0.13.1",
     "ts-loader": "0.8.2",
     "tslint-loader": "2.1.5",
-    "url-loader": "^0.5.7",
+    "url-loader": "0.5.7",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.16.2"
   }
