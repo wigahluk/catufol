@@ -132,11 +132,16 @@ Configuration.prototype.wpDebug = function () {
 Configuration.prototype.karmaBase = function () {
     const json = this.json();
     const files = [
+        karma.es6Shim,
         'node_modules/zone.js/dist/zone.min.js',
+        'node_modules/zone.js/dist/long-stack-trace-zone.js',
+        'node_modules/zone.js/dist/proxy.js',
+        'node_modules/zone.js/dist/sync-test.js',
+        'node_modules/zone.js/dist/jasmine-patch.js',
         'node_modules/zone.js/dist/async-test.js',
+        'node_modules/zone.js/dist/fake-async-test.js',
         karma.phPolyfill,
         'node_modules/reflect-metadata/Reflect.js',
-        karma.es6Shim,
         { pattern: 'test.loader.js', watched: false }
     ].concat(json.karmaFiles);
     return {

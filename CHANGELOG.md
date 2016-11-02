@@ -1,3 +1,7 @@
+# 0.2.0
+
+* Updating dependencies and including ZoneJS.
+
 # 0.1.9
 
 * A new file named `buildinfo.json` is now generated at the root of the build folder.
