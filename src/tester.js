@@ -1,6 +1,6 @@
 'use strict';
 
-const cli = require('./cli');
+const cli = require('./cli/cli');
 
 function singleRun (conf, callback) {
     const Server = require('karma').Server;

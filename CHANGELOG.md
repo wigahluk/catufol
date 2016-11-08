@@ -1,3 +1,7 @@
+# 0.3.0
+
+* Removing support for `-c` and `--clean` as they should be used internally.
+
 # 0.2.0
 
 * Updating dependencies and including ZoneJS.

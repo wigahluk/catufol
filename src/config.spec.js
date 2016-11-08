@@ -46,7 +46,7 @@ describe('Configuration', () => {
         const conf = new Conf(source);
         const karma = conf.karmaBase();
         expect(conf.json().karmaFiles.length).toBe(0);
-        expect(karma.files.length).toBe(6);
+        expect(karma.files.length).toBe(11);
     });
 
     it('Karma file as string', () => {
@@ -57,7 +57,7 @@ describe('Configuration', () => {
         expect(conf.json().karmaFiles[0]).toBe('a.f');
 
         const karma = conf.karmaBase();
-        expect(karma.files.length).toBe(7);
+        expect(karma.files.length).toBe(12);
         expect(karma.files.indexOf('a.f') >= 0).toBe(true);
     });
 });

@@ -5,92 +5,76 @@
 
 const path = require('path');
 const fs = require('fs');
-const cli = require('../src/cli');
+const cli = require('../src/cli/cli');
 const clean = require('../src/clean');
 const tester = require('../src/tester');
 const packager = require('../src/packager');
 const Conf = require('../src/config');
+const argumenter = require('../src/cli/argumenter');
 const args = process.argv;
 
-// Help
-if ( cli.has(args, '-h') || cli.has(args, '--help')) {
-    console.log([
-        'usage: catufol [options]',
-        '',
-        'options:',
-        '  --conf              Path to configuration file',
-        '  -c --clean          Folder to be cleaned',
-        '  -t --test           Run unit tests once',
-        '  -r --run            Run Webpack Development Server',
-        '  -b --build          Build package with Webpack',
-        '  -i --interactive    Run unit tests in debug mode (continuously)',
-        '  -h --help           Print this list and exit.'
-    ].join('\n'));
-    process.exit();
+function loadConf (action) {
+    const defPath = path.resolve(process.cwd(), action.confPath);
+    if (fs.existsSync(defPath)) {
+        return validateConf(
+            JSON.parse(fs.readFileSync(path.resolve(process.cwd(), action.confPath), 'utf8')),
+            action.packageName, action.packageMain
+        );
+    }
+    return validateConf({}, action.packageName, action.packageMain);
 }
 
-// Clean
-if ( cli.has(args, '-c') || cli.has(args, '--clean')) {
-    const fldrName = cli.get(args, '-c') || cli.get(args, '--clean');
-    if (!fldrName) {
-        cli.log('usage: catufol --clean <path to clean>');
-    } else {
-        clean(path.resolve(process.cwd(), fldrName));
-    }
-    process.exit();
-}
-
-// Load configuration
-const packageJson = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), './package.json'), 'utf8'));
-function loadConf () {
-    if ( cli.has(args, '--conf')) {
-        const confPath = cli.get(args, '--conf');
-        if (!confPath) {
-            cli.log('usage: catufol --conf <path to configuration>')
-        } else {
-            return validateConf(JSON.parse(fs.readFileSync(path.resolve(process.cwd(), confPath), 'utf8')));
-        }
-    } else {
-        // Guess configuration from package json
-        const defPath = path.resolve(process.cwd(), './catufol.json');
-        if (fs.existsSync(defPath)) {
-            return validateConf(JSON.parse(fs.readFileSync(path.resolve(process.cwd(), './catufol.json'), 'utf8')));
-        }
-        return validateConf({});
-    }
-}
-function validateConf (conf) {
+function validateConf (conf, packName, packMain) {
     if (!conf.appName) {
-        conf.appName = packageJson.name;
+        conf.appName = packName;
     }
     if (!conf.entryFile) {
-        conf.entryFile = './app/' + (packageJson.main || 'main.ts');
+        conf.entryFile = packMain;
     }
     if (!conf.vendors) {
         conf.vendors = [];
     }
     return conf;
 }
-const conf = new Conf(loadConf());
 
-// Develop
-if ( cli.has(args, '-r') || cli.has(args, '--run')) {
-    cli.log('Starting Webpack development Server.' );
-    packager.run(conf);
-}
-// Test
-if ( cli.has(args, '-t') || cli.has(args, '--test')) {
-    cli.log('Running Unit Tests with Karma and Jasmine.' );
-    tester.singleRun(conf, exitCode => { process.exit(exitCode); });
-}
-// Interactive Test
-if ( cli.has(args, '-i') || cli.has(args, '--interactive')) {
-    cli.log('Running Unit Tests with Karma and Jasmine.' );
-    tester.interactiveRun(conf, exitCode => { process.exit(exitCode); });
-}
-// Build
-if ( cli.has(args, '-b') || cli.has(args, '--build')) {
-    cli.log('Starting Webpack package build.' );
-    clean(path.resolve(process.cwd(), conf.buildPath()));
-    packager.build(conf);
-}
+argumenter.read(args).subscribe(
+    action => {
+        const conf = new Conf(loadConf(action));
+        if (action.name === 'test') {
+            cli.log('Running Unit Tests with Karma and Jasmine.' );
+            tester.singleRun(conf, exitCode => { process.exit(exitCode); });
+            return;
+        }
+        if (action.name === 'interactive') {
+            cli.log('Running Unit Tests with Karma and Jasmine.' );
+            tester.interactiveRun(conf, exitCode => { process.exit(exitCode); });
+            return;
+        }
+        if (action.name === 'run') {
+            cli.log('Starting Webpack development Server.' );
+            packager.run(conf);
+            return;
+        }
+        if (action.name === 'build') {
+            cli.log('Starting Webpack package build.' );
+            clean(path.resolve(process.cwd(), conf.buildPath()));
+            packager.build(conf);
+            return;
+        }
+        if (action.name === 'help') {
+            console.log([
+                'usage: catufol [options]',
+                '',
+                'options:',
+                '  --conf              Path to configuration file',
+                '  -t --test           Run unit tests once',
+                '  -r --run            Run Webpack Development Server',
+                '  -b --build          Build package with Webpack',
+                '  -i --interactive    Run unit tests in debug mode (continuously)',
+                '  -h --help           Print this list and exit.'
+            ].join('\n'));
+        }
+    },
+    error => { cli.log('Error: ' + error.message); },
+    () => {}
+);

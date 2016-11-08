@@ -2,7 +2,7 @@
 /**
  * Creates a webpack development server
  */
-const cli = require('./cli');
+const cli = require('./cli/cli');
 const git = require('./rxgit');
 const fs = require('./rxfs');
 const path = require('path');
