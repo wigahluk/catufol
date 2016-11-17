@@ -140,7 +140,6 @@ Configuration.prototype.karmaBase = function () {
         'node_modules/zone.js/dist/jasmine-patch.js',
         'node_modules/zone.js/dist/async-test.js',
         'node_modules/zone.js/dist/fake-async-test.js',
-        karma.phPolyfill,
         'node_modules/reflect-metadata/Reflect.js',
         { pattern: 'test.loader.js', watched: false }
     ].concat(json.karmaFiles);
