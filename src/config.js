@@ -156,7 +156,7 @@ Configuration.prototype.karmaBase = function () {
 
 Configuration.prototype.karmaTest = function () {
     const base = this.karmaBase();
-    base.browsers = ['PhantomJS'];
+    base.browsers = ['Chrome'];
     base.singleRun = true;
     base.reporters = ['dots', 'coverage'];
     base.coverageReporter = {

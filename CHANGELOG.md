@@ -1,3 +1,7 @@
+# 0.4.0
+
+* Removing support for PhantomJS
+
 # 0.3.0
 
 * Removing support for `-c` and `--clean` as they should be used internally.
