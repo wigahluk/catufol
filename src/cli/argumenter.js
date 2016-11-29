@@ -1,6 +1,6 @@
 const cli = require('./cli');
 const rx = require('rxjs');
-const fs = require('../rxfs');
+const fs = require('../fs/rxfs');
 
 function Action (name, confPath) {
     this.name = name;

@@ -4,7 +4,7 @@
  */
 const cli = require('./cli/cli');
 const git = require('./rxgit');
-const fs = require('./rxfs');
+const fs = require('./fs/rxfs');
 const path = require('path');
 const pwd = process.cwd();
 

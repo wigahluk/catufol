@@ -1,4 +1,4 @@
-const clean = require('./clean');
+const clean = require('./fs/clean');
 
 module.exports = {
     clean: clean
