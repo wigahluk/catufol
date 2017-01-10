@@ -8,10 +8,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const wp = require('./wpTools');
 const karma = require('./karmaTools');
 
-
-const nModules = path.resolve(pwd, './node_modules');
-const appPath = path.resolve(pwd, './app');
-
 function Configuration (json) {
     this.json = function () {
         return {

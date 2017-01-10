@@ -1,3 +1,15 @@
+# 0.5.0
+
+* Upgrading dependencies.
+
+## Breaking Changes
+
+* `jasmine` and `node` type definitions are no longer required in `typings.json`. Including them may cause compilation errors.
+* Linter rules: `label-undefined`, `no-constructor-vars`, `no-duplicate-key`, `no-unreachable`, `no-unused-variable`, `use-strict` are no longer supported.
+* You need to upgrade `tslint`, `typescript`, `typings` to recent versions.
+* Libraries `es6-shim`, `zone.js`, `reflect-metadata` are included an no longer need to be included in your `package.json`.
+* New version of the linter may cause some code to fail. You maiy need to update your rules or your code after the upgrade.
+
 # 0.4.0
 
 * Removing support for PhantomJS

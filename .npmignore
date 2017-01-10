@@ -12,9 +12,12 @@
 # Tests
 *.spec.js
 
+# Samples
+/samples
+
 # Node
 node_modules
 *.log
 
 # Jasmine
-./spec
+/spec
