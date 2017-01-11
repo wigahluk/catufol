@@ -8,12 +8,12 @@ const fs = require('./fs/rxfs');
 const path = require('path');
 const pwd = process.cwd();
 
-var webpack = require('webpack');
-var webpackDevServer = require('webpack-dev-server');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
 
 function getServer (conf) {
     const compiler = getCompiler(conf);
-    return new webpackDevServer(compiler, {
+    return new WebpackDevServer(compiler, {
         publicPath: '/', // Always run on root
         hot: true, // Configure hot replacement
         quiet: false,

@@ -1,6 +1,6 @@
 {
   "name": "catufol",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Helper tool for Webpack based SPAs using TypeScript",
   "main": "./src/catufol.js",
   "scripts": {
@@ -55,8 +55,8 @@
     "tslint-loader": "3.3.0",
     "reflect-metadata": "0.1.9",
     "url-loader": "0.5.7",
-    "webpack": "1.13.2",
-    "webpack-dev-server": "1.16.2",
+    "webpack": "2.2.0-rc.3",
+    "webpack-dev-server": "2.2.0-rc.0",
     "zone.js": "0.6.26"
   }
 }

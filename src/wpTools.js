@@ -10,103 +10,115 @@ const devTool = {
     inlineMap: 'inline-source-map'
 };
 
-const resolveExtensions = ['', '.ts','.js','.json','.css', '.less', '.html'];
-
-const htmlLoader = {
-    minimize: true,
-    removeAttributeQuotes: false,
-    caseSensitive: true,
-    customAttrSurround: [ [/#/, /(?:)/], [/\*/, /(?:)/], [/\[?\(?/, /(?:)/] ],
-    customAttrAssign: [ /\)?\]?=/ ]
-};
-
-const tslint = {
-    emitErrors: false,
-    failOnHint: false
-};
+const resolveExtensions = ['.ts','.js','.json','.css', '.less', '.html'];
 
 const loaders = {
-    ts: {
-        test: /\.ts$/,
-        loader: 'ts-loader',
-        exclude: [ nModules ]
-    },
     tsWithComments: {
-        test: /\.ts$/,
         loader: 'ts-loader',
-        query: { "compilerOptions": { "removeComments": false } },
-        exclude: [ nModules ]
+        options: {
+            'compilerOptions': {
+                'removeComments': false
+            }
+        },
     },
     tsNoComments: {
-        test: /\.ts$/,
         loader: 'ts-loader',
-        query: { "compilerOptions": { "removeComments": true } },
-        exclude: [ nModules ]
-    },
-    tslint: {
-        test: /\.ts$/,
-        loader: "tslint"
+        options: {
+            'compilerOptions': {
+                'removeComments': true
+            }
+        }
     },
     html: {
-        test: /\.html$/,
-        loader: "html-loader"
+        loader: 'html-loader',
+        options: {
+            minimize: true,
+            removeAttributeQuotes: false,
+            caseSensitive: true,
+            customAttrSurround: [ [/#/, /(?:)/], [/\*/, /(?:)/], [/\[?\(?/, /(?:)/] ],
+            customAttrAssign: [ /\)?\]?=/ ]
+        }
+    }
+};
+
+const rules = {
+    tsLint: {
+        test: /\.ts$/,
+        enforce: 'pre',
+        exclude: [nModules],
+        use: [ 'tslint-loader' ]
     },
-    json: {
-        test: /\.json$/,
-        loader: "json-loader"
+    ts: {
+        test: /\.ts$/,
+        exclude: [nModules],
+        use: [ 'ts-loader' ]
     },
-    jpg: {
-        test: /\.(?:jpg|png)$/,
-        loader: 'url-loader?limit=100000'
+    tsTest: {
+        test: /\.ts$/,
+        exclude: [nModules],
+        use: [ loaders.tsWithComments ]
     },
-    less:{
-        test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader'
+    tsDebug: {
+        test: /\.ts$/,
+        exclude: [nModules],
+        use: [ loaders.tsNoComments ]
     },
-    css: {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
-    },
-    woff: {
-        test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader?limit=100000&mimetype=application/font-woff"
-    },
-    ttf: {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader?limit=100000&mimetype=application/octet-stream"
-    },
-    eot: {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "file-loader"
-    },
-    svg: {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader?limit=100000&mimetype=image/svg+xml"
-    },
-    raw: {
-        test: /\.(?:tjs|tjson|xml)$/,
-        loader: 'raw-loader'
-    },
-    istambul: {
+    istanbul: {
         test: /\.(?:js|ts)$/,
+        use: [ 'istanbul-instrumenter-loader' ],
+        enforce: 'post',
         include: appPath,
-        loader: 'istanbul-instrumenter-loader',
         exclude: [
             /\.spec\.ts$/,
             /app\/domain\/services\/testing/,
             /node_modules/
         ]
     },
+    html: {
+        test: /\.html$/,
+        use: [ loaders.html]
+    },
+    raw: {
+        test: /\.(?:tjs|tjson|xml)$/,
+        use: ['raw-loader']
+    },
     styleNullLoader: {
         test: /\.(?:css|less|scss|styl)$/,
-        loader: 'null-loader'
+        use: [ 'null-loader' ]
+    },
+
+    jpg: {
+        test: /\.(?:jpg|png)$/,
+        use: ['url-loader?limit=100000']
+    },
+    less:{
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
+    },
+    css: {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+    },
+    woff: {
+        test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/,
+        use: ['url-loader?limit=100000&mimetype=application/font-woff']
+    },
+    ttf: {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: ['url-loader?limit=100000&mimetype=application/octet-stream']
+    },
+    eot: {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: ['file-loader']
+    },
+    svg: {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: ['url-loader?limit=100000&mimetype=image/svg+xml']
     }
 };
 
 module.exports = {
     devtool: devTool,
     extensions: resolveExtensions,
-    htmlLoader: htmlLoader,
-    tslint: tslint,
-    loaders: loaders
+    rules: rules
 };

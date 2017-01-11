@@ -9,12 +9,6 @@ const Conf = require('./config');
 function expectAll(wpConf) {
     const vals = ['.ts','.js','.json','.css', '.less', '.html'];
     vals.forEach(v => { expect(wpConf.resolve.extensions.indexOf(v) > -1).toBe(true);} );
-
-    expect(wpConf.htmlLoader.minimize).toBe(true);
-    expect(wpConf.htmlLoader.removeAttributeQuotes).toBe(false);
-    expect(wpConf.htmlLoader.caseSensitive).toBe(true);
-
-
 }
 
 describe('Configuration', () => {
@@ -29,9 +23,6 @@ describe('Configuration', () => {
         expect(wpConf.plugins.length).toBe(0);
         expect(wpConf.entry).toBeUndefined();
         expect(wpConf.output).toBeUndefined();
-
-        expect(wpConf.tslint.emitErrors).toBe(false);
-        expect(wpConf.tslint.failOnHint).toBe(false);
     });
 
     it('ExportJQuery should be false by default', () => {

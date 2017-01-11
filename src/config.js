@@ -35,13 +35,9 @@ Configuration.prototype.wpBase = function () {
     }
     return {
         plugins: plugins,
-        htmlLoader: wp.htmlLoader,
-        tslint: wp.tslint,
         resolve: { extensions: wp.extensions },
         module: {
-            preLoaders: [],
-            loaders: [],
-            postLoaders: []
+            rules: []
         }
     };
 };
@@ -59,18 +55,17 @@ Configuration.prototype.wpRunBase = function () {
         sourceMapFilename: '[file].map',
         publicPath: '/'
     };
-    base.module.preLoaders.push(wp.loaders.tslint);
-    base.module.loaders.push(wp.loaders.ts);
-    base.module.loaders.push(wp.loaders.html);
-    base.module.loaders.push(wp.loaders.raw);
-    base.module.loaders.push(wp.loaders.json);
-    base.module.loaders.push(wp.loaders.jpg);
-    base.module.loaders.push(wp.loaders.less);
-    base.module.loaders.push(wp.loaders.css);
-    base.module.loaders.push(wp.loaders.woff);
-    base.module.loaders.push(wp.loaders.ttf);
-    base.module.loaders.push(wp.loaders.eot);
-    base.module.loaders.push(wp.loaders.svg);
+    base.module.rules.push(wp.rules.tsLint);
+    base.module.rules.push(wp.rules.ts);
+    base.module.rules.push(wp.rules.html);
+    base.module.rules.push(wp.rules.raw);
+    base.module.rules.push(wp.rules.jpg);
+    base.module.rules.push(wp.rules.less);
+    base.module.rules.push(wp.rules.css);
+    base.module.rules.push(wp.rules.woff);
+    base.module.rules.push(wp.rules.ttf);
+    base.module.rules.push(wp.rules.eot);
+    base.module.rules.push(wp.rules.svg);
     return base;
 };
 
@@ -80,48 +75,50 @@ Configuration.prototype.wpBuild = function () {
     base.devtool = wp.devtool.sourceMap;
     base.entry.app.push(conf.prodEntryFile);
     base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'}));
-    base.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
-    base.plugins.push(new webpack.optimize.UglifyJsPlugin());
-    base.plugins.push(new webpack.optimize.CommonsChunkPlugin('vendor', `${conf.appName}/bundles/vendor.bundle.[hash].js`));
+    base.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
+    base.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true
+    }));
+    base.plugins.push(new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: `${conf.appName}/bundles/vendor.bundle.[hash].js`}));
     return base;
 };
 
 Configuration.prototype.wpRun = function () {
     const conf = this.json();
     const base = this.wpRunBase();
+    base.performance = { hints: false };
     base.devtool = wp.devtool.inlineMap;
-    base.debug = true;
     base.entry.app.push('webpack/hot/dev-server');
     base.entry.app.push('webpack-dev-server/client?http://localhost:8080');
     base.entry.app.push(conf.devEntryFile);
     base.plugins.push(new webpack.HotModuleReplacementPlugin());
     base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'}));
-    base.plugins.push(new webpack.optimize.CommonsChunkPlugin('vendor', `${conf.appName}/bundles/vendor.bundle.js`));
+    base.plugins.push(new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: `${conf.appName}/bundles/vendor.bundle.js`}));
     return base;
 };
 
 Configuration.prototype.wpTestBase = function () {
     const base = this.wpBase();
+    base.performance = { hints: false };
     base.devtool = wp.devtool.inlineMap;
-    base.module.loaders.push(wp.loaders.html);
-    base.module.loaders.push(wp.loaders.raw);
-    base.module.loaders.push(wp.loaders.json);
-    base.module.loaders.push(wp.loaders.styleNullLoader);
+    base.module.rules.push(wp.rules.html);
+    base.module.rules.push(wp.rules.raw);
+    base.module.rules.push(wp.rules.styleNullLoader);
     return base;
 };
 
 Configuration.prototype.wpTest = function () {
     const base = this.wpTestBase();
-    base.module.preLoaders.push(wp.loaders.tslint);
-    base.module.loaders.push(wp.loaders.tsWithComments);
-    base.module.postLoaders.push(wp.loaders.istambul);
+    base.module.rules.push(wp.rules.tsLint);
+    base.module.rules.push(wp.rules.tsTest);
+    base.module.rules.push(wp.rules.istanbul);
     return base;
 };
 
 Configuration.prototype.wpDebug = function () {
     const base = this.wpTestBase();
     base.devtool = wp.devtool.inlineMap;
-    base.module.loaders.push(wp.loaders.tsNoComments);
+    base.module.rules.push(wp.rules.tsDebug);
     return base;
 };
 
