@@ -87,7 +87,7 @@ const loaders = {
         test: /\.(?:tjs|tjson|xml)$/,
         loader: 'raw-loader'
     },
-    istambul: {
+    istanbul: {
         test: /\.(?:js|ts)$/,
         include: appPath,
         loader: 'istanbul-instrumenter-loader',

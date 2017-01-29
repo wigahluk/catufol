@@ -114,7 +114,7 @@ Configuration.prototype.wpTest = function () {
     const base = this.wpTestBase();
     base.module.preLoaders.push(wp.loaders.tslint);
     base.module.loaders.push(wp.loaders.tsWithComments);
-    base.module.postLoaders.push(wp.loaders.istambul);
+    base.module.postLoaders.push(wp.loaders.istanbul);
     return base;
 };
 
