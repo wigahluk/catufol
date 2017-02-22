@@ -1,3 +1,10 @@
+# 0.6.0
+
+* Downgrade tslint, tslint-loader and ts-loader to reduce compatibility issues with previous configurations
+* **test** option now generates a _JUNit_ report under `/coverage` folder
+* Coverage Report is now under `/coverage/lcov-report/`
+* Coverage report correctly uses source maps
+
 # 0.5.0
 
 * Upgrading dependencies.
