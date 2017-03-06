@@ -1,7 +1,7 @@
 # 0.6.0
 
 * Downgrade tslint, tslint-loader and ts-loader to reduce compatibility issues with previous configurations
-* **test** option now generates a _JUNit_ report under `/coverage` folder
+* **test** option now generates a _JUnit_ report under `/coverage` folder
 * Coverage Report is now under `/coverage/lcov-report/`
 * Coverage report correctly uses source maps
 
@@ -14,8 +14,8 @@
 * `jasmine` and `node` type definitions are no longer required in `typings.json`. Including them may cause compilation errors.
 * Linter rules: `label-undefined`, `no-constructor-vars`, `no-duplicate-key`, `no-unreachable`, `no-unused-variable`, `use-strict` are no longer supported.
 * You need to upgrade `tslint`, `typescript`, `typings` to recent versions.
-* Libraries `es6-shim`, `zone.js`, `reflect-metadata` are included an no longer need to be included in your `package.json`.
-* New version of the linter may cause some code to fail. You maiy need to update your rules or your code after the upgrade.
+* Libraries `es6-shim`, `zone.js`, `reflect-metadata` are included and no longer need to be included in your `package.json`.
+* New version of the linter may cause some code to fail. You may need to update your rules or your code after the upgrade.
 
 # 0.4.0
 
