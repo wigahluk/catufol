@@ -92,7 +92,7 @@ Configuration.prototype.wpRun = function () {
     base.devtool = wp.devtool.inlineMap;
     base.debug = true;
     base.entry.app.push('webpack/hot/dev-server');
-    base.entry.app.push('webpack-dev-server/client?http://localhost:8080');
+    base.entry.app.push(`webpack-dev-server/client?http://localhost:${this.wpPort()}`);
     base.entry.app.push(conf.devEntryFile);
     base.plugins.push(new webpack.HotModuleReplacementPlugin());
     base.plugins.push(new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'}));
