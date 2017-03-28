@@ -70,6 +70,7 @@ You may want to add a configuration file `catufol.json`:
 ```
 {
   "appName": "apps",     // It will default to your project name in package.json if not provided
+  "devServerPort": 8081, // Defaults to 8080, changes the webpack dev server port
   "exportJQuery": true,  // Defaults to false, when true makes jQuery available in your modules as `jQuery`, `$`, and `window.jQuery`
   "vendors": [           // Modules included here will be included in a vendors.bundle.js file instead of bundle.js
      "reflect-metadata",
