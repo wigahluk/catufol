@@ -1,3 +1,5 @@
+[ ![Codeship Status for wigahluk/catufol](https://app.codeship.com/projects/a692f220-f6ce-0134-948f-3e14bfe21487/status?branch=master)](https://app.codeship.com/projects/210582)
+
 Catùfol
 =======
 

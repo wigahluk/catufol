@@ -24,6 +24,9 @@
   "bin": {
     "catufol": "./bin/catufol"
   },
+  "engines": {
+    "node": ">= 5.0.0"
+  },
   "devDependencies": {},
   "peerDependencies": {
     "less": "2.7.1",
