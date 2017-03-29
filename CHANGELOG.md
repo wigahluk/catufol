@@ -1,3 +1,7 @@
+# 0.6.1
+
+* Fix port configuration for Webpack dev server (thanks to Amr)
+
 # 0.6.0
 
 * Downgrade tslint, tslint-loader and ts-loader to reduce compatibility issues with previous configurations
