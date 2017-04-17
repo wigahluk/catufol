@@ -63,6 +63,10 @@ const loaders = {
         test: /\.less$/,
         loader: 'style-loader!css-loader!less-loader'
     },
+    scss:{
+        test: /\.scss/,
+        loader: 'style-loader!css-loader!sass-loader'
+    },
     css: {
         test: /\.css$/,
         loader: 'style-loader!css-loader'

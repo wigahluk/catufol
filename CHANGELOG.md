@@ -1,3 +1,12 @@
+# 0.6.2
+
+* Optional loader configuration added for **Sass**.
+
+## Breaking Changes
+
+* RxJS is no longer a development dependency. No it is a Peer Dependency and you will need to install it on your project.
+
+
 # 0.6.1
 
 * Fix port configuration for Webpack dev server (thanks to Amr)

@@ -66,6 +66,7 @@ Configuration.prototype.wpRunBase = function () {
     base.module.loaders.push(wp.loaders.json);
     base.module.loaders.push(wp.loaders.jpg);
     base.module.loaders.push(wp.loaders.less);
+    base.module.loaders.push(wp.loaders.scss);
     base.module.loaders.push(wp.loaders.css);
     base.module.loaders.push(wp.loaders.woff);
     base.module.loaders.push(wp.loaders.ttf);

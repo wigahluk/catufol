@@ -117,6 +117,12 @@ testing.setBaseTestProviders(
 );
 ```
 
+### Optional loaders
+
+* **Sass** If you want to use Sass you will need to install a Webpack Sass Loader. A recomended version is **3.2.0**. Newer versions will use Webpack 2.0, which is not compatible with the current version of Catùfol.
+
+
+
 ### Build Folder
 
 The generated `build` folder will have the following structure:
