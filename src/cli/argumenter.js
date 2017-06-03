@@ -27,6 +27,9 @@ const read = args => rx.Observable.of(args)
         if (as && as.length > 0 && (cli.has(as, '-t') || cli.has(as, '--test'))) {
             return new Action('test', confPath);
         }
+        if (as && as.length > 0 && (cli.has(as, '-hl') || cli.has(as, '--headless'))) {
+            return new Action('headless', confPath);
+        }
         if (as && as.length > 0 && (cli.has(as, '-i') || cli.has(as, '--interactive'))) {
             return new Action('interactive', confPath);
         }

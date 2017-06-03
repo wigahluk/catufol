@@ -79,6 +79,22 @@ describe('Argumenter', () => {
             () => { done(); }
         );
     });
+    it('Emits headless if arguments contain -hl', (done) => {
+        const args = ['-hl'];
+        argumenter.read(args).subscribe(
+            action => { expect(action.name).toBe('headless'); },
+            undefined,
+            () => { done(); }
+        );
+    });
+    it('Emits headless if arguments contain --headless', (done) => {
+        const args = ['--headless'];
+        argumenter.read(args).subscribe(
+            action => { expect(action.name).toBe('headless'); },
+            undefined,
+            () => { done(); }
+        );
+    });
     it('Emits interactive if arguments contain -i', (done) => {
         const args = ['-i'];
         argumenter.read(args).subscribe(
@@ -117,7 +133,7 @@ describe('Argumenter', () => {
             () => { done(); }
         );
     });
-    it('Emit error if no conf is providen', (done) => {
+    it('Emit error if no conf is provided', (done) => {
         const args = ['--run', '--conf'];
         argumenter.read(args).subscribe(
             action => {

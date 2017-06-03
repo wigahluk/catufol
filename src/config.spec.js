@@ -60,4 +60,23 @@ describe('Configuration', () => {
         expect(karma.files.length).toBe(11);
         expect(karma.files.indexOf('a.f') >= 0).toBe(true);
     });
+
+    it('Karma test runs on Chrome', () => {
+        const source = { appName: 'a', vendors: ['b', 'c'], entryFile: 'e', karmaFiles: ['a.f'] };
+        const conf = new Conf(source);
+        const karma = conf.karmaTest();
+        expect(karma.browsers.length).toBe(1);
+        expect(karma.browsers[0]).toBe('Chrome');
+        expect(karma.customLaunchers).toBeUndefined();
+    });
+
+    it('Karma headless runs on Chrome Headless', () => {
+        const source = { appName: 'a', vendors: ['b', 'c'], entryFile: 'e', karmaFiles: ['a.f'] };
+        const conf = new Conf(source);
+        const karma = conf.karmaHeadless();
+        expect(karma.browsers.length).toBe(1);
+        expect(karma.browsers[0]).toBe('ChromeHeadless');
+        expect(karma.customLaunchers).toBeDefined();
+        expect(karma.customLaunchers.ChromeHeadless).toBeDefined();
+    });
 });

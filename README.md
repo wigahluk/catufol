@@ -148,6 +148,7 @@ build/
 
 ### Testing
 
-To run the tests, first install webpack locally (do not save or include in package.json) with `npm i webpack`.
+To run the tests, first install webpack and rxjs locally (do not save or include in package.json) with `npm i webpack`,
+and `npm i rxjs`.
 
 Run `npm test`.

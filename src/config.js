@@ -150,7 +150,7 @@ Configuration.prototype.karmaBase = function () {
     };
 };
 
-Configuration.prototype.karmaTest = function () {
+Configuration.prototype.karmaHeadless = function () {
     const base = this.karmaBase();
     base.browsers = ['ChromeHeadless'];
     base.customLaunchers = {
@@ -158,7 +158,31 @@ Configuration.prototype.karmaTest = function () {
             base: 'Chrome',
             flags: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '-incognito']
         }
-    }
+    };
+    base.singleRun = true;
+    base.reporters = ['dots', 'coverage-istanbul', 'junit'];
+    base.junitReporter= {
+        outputFile: 'test-results.xml',
+        outputDir: 'coverage/',
+        useBrowserName: false
+    };
+    base.coverageIstanbulReporter = {
+        dir : 'coverage/',
+        reporters: [
+            { type: 'text-summary' },
+            { type: 'json' },
+            { type: 'html' }
+        ],
+        fixWebpackSourcePaths: true
+    };
+    base.webpack = this.wpTest();
+    base.webpackMiddleware = { noInfo: true };
+    return base;
+};
+
+Configuration.prototype.karmaTest = function () {
+    const base = this.karmaBase();
+    base.browsers = ['Chrome'];
     base.singleRun = true;
     base.reporters = ['dots', 'coverage-istanbul', 'junit'];
     base.junitReporter= {

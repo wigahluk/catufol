@@ -21,7 +21,17 @@ function interactiveRun (conf, callback) {
     server.start();
 }
 
+function headlessRun (conf, callback) {
+    const Server = require('karma').Server;
+    const server = new Server(conf.karmaHeadless(), function(exitCode) {
+        cli.log('Karma has exited with ' + exitCode);
+        callback(exitCode)
+    });
+    server.start();
+}
+
 module.exports = {
     singleRun: singleRun,
-    interactiveRun: interactiveRun
+    interactiveRun: interactiveRun,
+    headlessRun: headlessRun
 };
