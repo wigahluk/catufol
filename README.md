@@ -119,7 +119,7 @@ testing.setBaseTestProviders(
 
 ### Optional loaders
 
-* **Sass** If you want to use Sass you will need to install a Webpack Sass Loader. A recomended version is **3.2.0**. Newer versions will use Webpack 2.0, which is not compatible with the current version of Catùfol.
+* **Sass** If you want to use Sass you will need to install a Webpack Sass Loader. A recommended version is **3.2.0**. Newer versions will use Webpack 2.0, which is not compatible with the current version of Catùfol.
 
 
 
@@ -141,8 +141,9 @@ build/
 
 ### CLI options
 
-* `-t` `--test` will reun unit tests once using PhantomJS. Commonly used in CI environments
+* `-t` `--test` will run unit tests once using PhantomJS. Commonly used in CI environments
 * `-i` `--interactive` will run tests in interactive mode using Chrome
+* `-hl` `--headless` will run tests using headless Chrome 
 * `-r` `--run` will run Webpack Development Server
 * `-b` `--build` will create the final artifacts using Webpack
 

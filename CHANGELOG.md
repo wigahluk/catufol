@@ -2,7 +2,7 @@
 
 ## Breaking changes
 
-* Now users have to pass `-h` or `--headless` flag to run tests using Headless Chrome browser
+* Now users have to pass `-hl` or `--headless` flag to run tests using Headless Chrome browser
 
 ## Bugs Fixed
 
