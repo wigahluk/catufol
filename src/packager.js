@@ -8,44 +8,41 @@ const fs = require('./fs/rxfs');
 const path = require('path');
 const pwd = process.cwd();
 
-var webpack = require('webpack');
-var webpackDevServer = require('webpack-dev-server');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
 
-function getServer (conf) {
-    const compiler = getCompiler(conf);
-    return new webpackDevServer(compiler, {
+
+const getCompiler = conf => {
+    const compiler = webpack(conf);
+    compiler.plugin('compile', () => { cli.log('Webpack bundling started.'); });
+    compiler.plugin('done', () => { cli.log('Webpack bundling completed.'); });
+    return compiler;
+};
+
+const getServer = conf =>
+    new WebpackDevServer(getCompiler(conf), {
         publicPath: '/', // Always run on root
-        hot: true, // Configure hot replacement
-        quiet: false,
-        noInfo: false,
+        hot: true,       // Configure hot replacement
+        quiet: false,    // Reduce the noise on the terminal
+        noInfo: false,   // Reduce the noise on the terminal
         stats: {
             chunks: false,
             colors: true
+        },
+        setup: app => {
+            // Adding an extra handler on the Webpack server middleware to prevent local hidden folders to be exposed.
+            app.get(/^\/\..+/, (req, res) => { res.status(404).end(); });
         }
     });
-}
 
-function getCompiler(conf) {
-    const compiler = webpack(conf);
-    compiler.plugin('compile', function() {
-        cli.log('Webpack bundling started.');
-    });
-    compiler.plugin('done', function() {
-        cli.log('Webpack bundling completed.');
-    });
-    return compiler;
-}
 
 function run (conf) {
-    const server = getServer(conf.wpRun());
-    server.listen(conf.wpPort(), function () {
-        cli.log('Webpack Development Server running at port ' + conf.wpPort());
-    })
+    getServer(conf.wpRun())
+        .listen(conf.wpPort(), () => { cli.log(`Webpack Development Server running at port ${conf.wpPort()}`); })
 }
 
 function build (conf) {
-    const comp = getCompiler(conf.wpBuild());
-    comp.run(function (err, stats) {
+    getCompiler(conf.wpBuild()).run((err, stats) => {
         if (err) {
             cli.log('Error while building.\n');
             cli.log(err);
@@ -55,15 +52,14 @@ function build (conf) {
         const infoPath = path.resolve(pwd, conf.buildPath());
         const today = new Date();
         git.sha()
-            .map(sha => {
-                return {
-                    appName: jConf.appName,
-                    buildTimeStamp: today.valueOf(),
-                    buildDate: today.toISOString(),
-                    webpackHash: stats.hash,
-                    gitSha: sha
-                };
-            }).flatMap(info => fs.writeFile(infoPath + '/buildinfo.json', JSON.stringify(info), 'utf8'))
+            .map(sha => ({
+                appName: jConf.appName,
+                buildTimeStamp: today.valueOf(),
+                buildDate: today.toISOString(),
+                webpackHash: stats.hash,
+                gitSha: sha
+            }))
+            .flatMap(info => fs.writeFile(infoPath + '/buildinfo.json', JSON.stringify(info), 'utf8'))
             .subscribe(
                 undefined,
                 error => {

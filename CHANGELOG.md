@@ -1,3 +1,9 @@
+# 0.7.1
+
+## Bugs Fixed
+
+* Local hidden folders and files were exposed in Webpack dev server and hence across all other layers. Now all local paths starting with "." return `404`.
+
 # 0.7.0
 
 ## Breaking changes
