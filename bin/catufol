@@ -45,6 +45,11 @@ argumenter.read(args).subscribe(
             tester.singleRun(conf, exitCode => { process.exit(exitCode); });
             return;
         }
+        if (action.name === 'headless') {
+            cli.log('Running Unit Tests with Karma and Jasmine in Headless mode.');
+            tester.headlessRun(conf, exitCode => { process.exit(exitCode); });
+            return;
+        }
         if (action.name === 'interactive') {
             cli.log('Running Unit Tests with Karma and Jasmine.' );
             tester.interactiveRun(conf, exitCode => { process.exit(exitCode); });
@@ -68,6 +73,7 @@ argumenter.read(args).subscribe(
                 'options:',
                 '  --conf              Path to configuration file',
                 '  -t --test           Run unit tests once',
+                '  -hl --headless      Run unit tests once in headless mode',
                 '  -r --run            Run Webpack Development Server',
                 '  -b --build          Build package with Webpack',
                 '  -i --interactive    Run unit tests in debug mode (continuously)',

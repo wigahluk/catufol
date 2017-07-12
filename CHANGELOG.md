@@ -1,3 +1,9 @@
+# 0.7.2
+
+## Bugs Fixed
+
+* Headless flags (-hl --headless) are now consistently being picked up by the argumenter and launches tests using headless chrome browser in an incognito setup.
+
 # 0.7.1
 
 ## Bugs Fixed
